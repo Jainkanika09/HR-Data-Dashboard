@@ -1,0 +1,548 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap');
+
+  .post-wrapper {
+    font-family: 'DM Sans', sans-serif;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 0 2rem;
+  }
+
+  .post-card {
+    background: #0a0f1e;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .post-header {
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a0a2e 50%, #0d1b3e 100%);
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(99,91,210,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .post-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(29,158,117,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .author-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #635BD2, #1D9E75);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 15px; color: #fff;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+
+  .author-info {}
+  .author-name {
+    font-size: 15px; font-weight: 500; color: #fff; margin: 0 0 2px;
+    letter-spacing: 0.01em;
+  }
+  .author-title {
+    font-size: 12px; color: rgba(255,255,255,0.5); margin: 0;
+  }
+
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: #fff;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .headline span {
+    background: linear-gradient(90deg, #A78BFA, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subheadline {
+    font-size: 13px; color: rgba(255,255,255,0.55);
+    margin: 0; font-weight: 300;
+    letter-spacing: 0.03em;
+    position: relative; z-index: 1;
+  }
+
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .kpi-cell {
+    background: #0d1425;
+    padding: 1rem 1.25rem;
+    text-align: center;
+  }
+
+  .kpi-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    margin: 0 0 3px;
+  }
+
+  .kpi-label {
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin: 0;
+  }
+
+  .v1 { color: #A78BFA; }
+  .v2 { color: #34D399; }
+  .v3 { color: #F59E0B; }
+  .v4 { color: #60A5FA; }
+  .v5 { color: #F472B6; }
+  .v6 { color: #FB923C; }
+
+  .post-body {
+    padding: 1.5rem 2rem;
+  }
+
+  .hook-line {
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.55;
+    margin: 0 0 1.25rem;
+    padding-left: 1rem;
+    border-left: 3px solid #635BD2;
+  }
+
+  .body-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.75;
+    margin: 0 0 1.25rem;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.25rem 0;
+  }
+
+  .insight-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+
+  .insight-icon {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .insight-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .insight-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .insight-text strong {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .viz-section {
+    margin: 1.5rem 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .viz-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 500;
+  }
+
+  .mini-bars {
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .bar-num {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .donut-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .legend-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-pct {
+    margin-left: auto;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .callout-block {
+    background: rgba(99,91,210,0.12);
+    border: 1px solid rgba(99,91,210,0.25);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+  }
+
+  .callout-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .callout-text span {
+    color: #A78BFA;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .cta-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .hashtag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1rem;
+  }
+
+  .hashtag {
+    font-size: 12px;
+    color: #60A5FA;
+    font-weight: 400;
+  }
+
+  .engage-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .engage-stat {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .copy-btn {
+    background: rgba(99,91,210,0.15);
+    border: 1px solid rgba(99,91,210,0.35);
+    border-radius: 6px;
+    color: #A78BFA;
+    font-size: 12px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+
+  .copy-btn:hover {
+    background: rgba(99,91,210,0.28);
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 1.25rem 0;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    font-weight: 500;
+    margin: 0 0 0.6rem;
+  }
+</style>
+
+<div class="post-wrapper">
+  <div class="post-card">
+
+    <div class="post-header">
+      <div class="author-row">
+        <div class="avatar">YN</div>
+        <div class="author-info">
+          <p class="author-name">Your Name · Chief People Officer</p>
+          <p class="author-title">Enterprise Workforce Intelligence · Power BI Analytics</p>
+        </div>
+      </div>
+      <h1 class="headline">We just mapped <span>9,000 employees</span> across 7 departments — here's what the data revealed.</h1>
+      <p class="subheadline">A deep-dive into our HR Analytics dashboard built in Power BI</p>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-cell">
+        <p class="kpi-value v1">$759M</p>
+        <p class="kpi-label">Total Payroll</p>
+      </div>
+      <div class="kpi-cell">
+        <p class="kpi-value v2">8K</p>
+        <p class="kpi-label">Active Employees</p>
+      </div>
+      <div class="kpi-cell">
+        <p class="kpi-value v3">12%</p>
+        <p class="kpi-label">Attrition Rate</p>
+      </div>
+      <div class="kpi-cell">
+        <p class="kpi-value v4">$85K</p>
+        <p class="kpi-label">Avg Salary</p>
+      </div>
+      <div class="kpi-cell">
+        <p class="kpi-value v5">30%</p>
+        <p class="kpi-label">Overtime %</p>
+      </div>
+      <div class="kpi-cell">
+        <p class="kpi-value v6">28</p>
+        <p class="kpi-label">Unique Roles</p>
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      <p class="hook-line">"What you can't measure, you can't improve." — And most HR teams are flying blind. We decided to change that.</p>
+
+      <p class="body-text">Over the last quarter, we built a comprehensive <strong style="color:#fff;">Human Resources Analytics</strong> system in Power BI — tracking everything from headcount and compensation to performance ratings and attrition patterns. Here's what a $759M payroll looks like when you actually study it:</p>
+
+      <p class="section-label">— financial snapshot</p>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-icon"><span class="insight-dot" style="background:#A78BFA;"></span> Compensation</div>
+          <p class="insight-text">Total payroll of <strong>$759M</strong> across 9K employees. Avg salary sits at <strong>$85K</strong> — competitive across all 7 departments.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon"><span class="insight-dot" style="background:#34D399;"></span> Salary Equity</div>
+          <p class="insight-text">Salary distributed nearly equally by education level — Bachelor, PhD, Master & High School each at <strong>~25%</strong> of total spend.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon"><span class="insight-dot" style="background:#F59E0B;"></span> Attrition Cost</div>
+          <p class="insight-text">Finance & IT show highest attrition at <strong>13%</strong>. Every % point costs us ~$7.6M in rehiring + training — a number that moves fast.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon"><span class="insight-dot" style="background:#60A5FA;"></span> Overtime Load</div>
+          <p class="insight-text">30% of the workforce logs overtime. Finance & IT lead at <strong>36%</strong> OT — a direct signal of under-resourcing we're addressing now.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="section-label">— dashboard visualization breakdown</p>
+
+      <p class="body-text">One of my favorite parts of this project — the <strong style="color:#fff;">visualization architecture</strong>. We used 4 page views, each serving a specific strategic audience:</p>
+
+      <div class="viz-section">
+        <div class="viz-header">Headcount by Department — Bar Chart</div>
+        <div class="mini-bars">
+          <div class="bar-row">
+            <span class="bar-label">Operations</span>
+            <div class="bar-track"><div class="bar-fill" style="width:100%; background:#A78BFA;"></div></div>
+            <span class="bar-num">2,346</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Sales</span>
+            <div class="bar-track"><div class="bar-fill" style="width:72%; background:#8B7FE8;"></div></div>
+            <span class="bar-num">1,679</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Cust. Service</span>
+            <div class="bar-track"><div class="bar-fill" style="width:65%; background:#7B6ED5;"></div></div>
+            <span class="bar-num">1,523</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">IT</span>
+            <div class="bar-track"><div class="bar-fill" style="width:49%; background:#6B5EC2;"></div></div>
+            <span class="bar-num">1,149</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Marketing</span>
+            <div class="bar-track"><div class="bar-fill" style="width:27%; background:#34D399;"></div></div>
+            <span class="bar-num">643</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Finance</span>
+            <div class="bar-track"><div class="bar-fill" style="width:17%; background:#2ABC84;"></div></div>
+            <span class="bar-num">407</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-section">
+        <div class="viz-header">Gender Distribution — Donut Chart</div>
+        <div class="donut-row">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="30" fill="none" stroke="#A78BFA" stroke-width="14" stroke-dasharray="102 189" stroke-dashoffset="0"/>
+            <circle cx="40" cy="40" r="30" fill="none" stroke="#34D399" stroke-width="14" stroke-dasharray="87 189" stroke-dashoffset="-102"/>
+            <text x="40" y="44" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.7)" font-family="DM Sans,sans-serif">Gender</text>
+          </svg>
+          <div class="legend-items">
+            <div class="legend-item"><span class="legend-dot" style="background:#34D399;"></span>Male<span class="legend-pct">54%</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#A78BFA;"></span>Female<span class="legend-pct">46%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="body-text">The <strong style="color:#fff;">Performance page</strong> uses a treemap to visualize performance status by education level — immediately surfacing which talent cohorts are over- or under-represented in "Excellent" ratings. The <strong style="color:#fff;">Compensation page</strong> uses a department-level attrition matrix table — our finance team's go-to for workforce budget planning.</p>
+
+      <div class="callout-block">
+        <p class="callout-text">"The real insight wasn't in any single chart. It was in seeing that our <span>highest-performing department (Operations — 329 high performers)</span> also carried our largest headcount AND the same attrition rate as Finance. Scale doesn't protect you from churn."</p>
+      </div>
+
+      <div class="divider"></div>
+      <p class="section-label">— 3 lessons for every people leader</p>
+
+      <p class="body-text">
+        <strong style="color:#fff;">1. Geographic concentration is a risk.</strong> 72% of our workforce sits in New York. That's a single point of failure — regulatory, talent market, and cost-wise. We're actively rebalancing.<br><br>
+        <strong style="color:#fff;">2. Overtime is a lagging signal, not a badge of honor.</strong> 30% overtime means workload design is broken — not that your people are dedicated. Fix the system.<br><br>
+        <strong style="color:#fff;">3. Education-salary equity matters.</strong> Equal salary distribution across Bachelor, Master, PhD, and High School graduates signals role-based compensation — not credential inflation. That's intentional and we're proud of it.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="cta-text">If you're leading HR, Finance, or Operations and you're <em>not</em> running a live analytics dashboard — you're making decisions with yesterday's data. Happy to share the Power BI template. Drop a comment or DM me.</p>
+
+      <p class="cta-text" style="color:rgba(255,255,255,0.85); font-weight:500;">What's the one workforce metric your executive team asks for every Monday morning? Let me know below 👇</p>
+
+      <div class="hashtag-row">
+        <span class="hashtag">#HRAnalytics</span>
+        <span class="hashtag">#PowerBI</span>
+        <span class="hashtag">#WorkforceIntelligence</span>
+        <span class="hashtag">#PeopleAnalytics</span>
+        <span class="hashtag">#CHROInsights</span>
+        <span class="hashtag">#DataDrivenHR</span>
+        <span class="hashtag">#FutureOfWork</span>
+        <span class="hashtag">#Leadership</span>
+        <span class="hashtag">#Compensation</span>
+        <span class="hashtag">#TalentManagement</span>
+      </div>
+    </div>
+
+    <div class="engage-row">
+      <span class="engage-stat">Human Resources Analytics · Enterprise Workforce Intelligence</span>
+      <button class="copy-btn" onclick="
+        const text = document.querySelector('.post-body').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          this.textContent = 'Copied!';
+          setTimeout(() => this.textContent = 'Copy post text ↗', 2000);
+        });
+      ">Copy post text ↗</button>
+    </div>
+
+  </div>
+</div>
